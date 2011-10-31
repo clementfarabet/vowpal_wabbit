@@ -29,9 +29,6 @@ static int allreduce_accumulate(lua_State *L) {
   ftime(&t_end);
   net_comm_time += (int) (1000.0 * (t_end.time - t_start.time) + (t_end.millitm - t_start.millitm));
 
-  // div
-  THFloatTensor_mul(data, 1/total);
-
   // return
   lua_pushnumber(L, net_comm_time);
   THFloatTensor_free(data);

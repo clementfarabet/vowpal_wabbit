@@ -22,6 +22,16 @@ function allreduce.accumulate(data)
    return time
 end
 
+function allreduce.average(data)
+   local time = data.allreduce.accumulate(data, 
+                                          parameters.master_location, 
+                                          parameters.unique_id, 
+                                          parameters.total,
+                                          parameters.node)
+   data:div(parameters.total)
+   return time
+end
+
 function allreduce.best(data, score)
    local time = data.allreduce.best(data, 
                                     parameters.master_location, 
