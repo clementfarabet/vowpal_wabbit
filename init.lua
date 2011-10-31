@@ -21,3 +21,13 @@ function allreduce.accumulate(data)
                                           parameters.node)
    return time
 end
+
+function allreduce.best(data, score)
+   local time = data.allreduce.best(data, 
+                                    parameters.master_location, 
+                                    parameters.unique_id, 
+                                    parameters.total,
+                                    parameters.node,
+                                    score)
+   return time
+end
