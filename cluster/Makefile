@@ -10,7 +10,7 @@ spanning_tree: spanning_tree.o
 	$(COMPILER) $(FLAGS) -o $@ $+ 
 
 install: spanning_tree
-	cp spanning_tree /usr/local/bin
+	cp spanning_tree /usr/local/bin/allreduce
 
 clean:
 	rm -f  *.o $(BINARIES) *~ $(MANPAGES)
