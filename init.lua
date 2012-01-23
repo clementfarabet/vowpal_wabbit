@@ -6,11 +6,11 @@ require 'liballreduce'
 allreduce = {}
 local parameters = {}
 
-function allreduce.init(master_location, unique_id, total, node)
+function allreduce.init(master_location, node, total, unique_id)
    parameters.master_location = master_location or 'localhost'
-   parameters.unique_id = unique_id
-   parameters.total = total
-   parameters.node = node-1
+   parameters.unique_id = unique_id or 0
+   parameters.total = total or 1
+   parameters.node = (node or 1) - 1
 end
 
 function allreduce.accumulate(data)
