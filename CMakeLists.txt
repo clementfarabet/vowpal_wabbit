@@ -17,7 +17,13 @@ include_directories (${TORCH_INCLUDE_DIR} ${PROJECT_SOURCE_DIR})
 include_directories (${TORCH_INCLUDE_DIR} ${PROJECT_SOURCE_DIR})
 add_library (allreduce SHARED init.cpp allreduce.cc)
 link_directories (${TORCH_LIBRARY_DIR})
-target_link_libraries (allreduce ${TORCH_LIBRARIES} )
+target_link_libraries (allreduce ${TORCH_LIBRARIES})
+
+add_executable(allserver cluster/spanning_tree.cc)
 
 install_files(${INSTALL_PREFIX} init.lua)
 install_targets(${CINSTALL_PREFIX} allreduce)
+
+install(TARGETS allserver
+  RUNTIME DESTINATION bin
+)
