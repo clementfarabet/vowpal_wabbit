@@ -1,10 +1,41 @@
+----------------------------------------------------------------------
+-- This is a simple Lua interface to John Langford's allreduce
+-- implementation.
+--
+-- To use it, you simply neet to start a server on some arbitrary
+-- machine:
+-- $ ssh mymachine
+-- $ lua -lallreduce -e "allreduce.startserver()"
+--
+-- Once this daemon is running, you can run as many jobs as you
+-- like, on any machine, provided that you point to 'mymachine'.
+-- From Lua:
+-- -- script 1:
+-- > allreduce.init('mymachine', 1, 2)  -- job 1/2
+-- > allreduce.average(somevector)
+--
+-- -- script 2:
+-- > allreduce.init('mymachine', 2, 2)  -- job 2/2
+-- > allreduce.average(somevector)
+--
+-- After these calls, both scripts will have the same 'somevector'.
+--
+-- Author: Clement Farabet
+----------------------------------------------------------------------
 
 require 'xlua'
 require 'torch'
 require 'liballreduce'
+require 'paths'
 
 allreduce = {}
 local parameters = {}
+
+function allreduce.startserver()
+   print('<allreduce> (re)starting server on local machine')
+   os.execute('killall allserver > /dev/null')
+   os.execute(paths.concat(paths.install_bin,'allserver'))
+end
 
 function allreduce.init(master_location, node, total, unique_id)
    parameters.master_location = master_location or 'localhost'

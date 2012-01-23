@@ -1,3 +1,46 @@
+# allreduce: a simple Lua wrapper around vowpal wabbit's allreduce implementation
+
+This is a simple Lua interface to John Langford's allreduce
+implementation.
+
+To use it, you simply neet to start a server on some arbitrary
+machine:
+
+``` sh
+ssh mymachine
+lua -lallreduce -e "allreduce.startserver()"
+```
+
+Once this daemon is running, you can run as many jobs as you
+like, on any machine, provided that you point to 'mymachine'.
+
+From Lua:
+``` lua
+-- script 1:
+allreduce.init('mymachine', 1, 2)  -- job 1/2
+allreduce.average(somevector)
+```
+
+``` lua
+-- script 2:
+allreduce.init('mymachine', 2, 2)  -- job 2/2
+allreduce.average(somevector)
+```
+
+After these calls, both scripts will have the same 'somevector'.
+
+## Install
+
+You will need a valid luarocks install of [Torch7](http://github.com/andresy/torch).
+
+Given a valid luarocks install:
+
+``` sh
+luarocks --from=http://luarocks.neuflow.org/ install allreduce
+```
+
+## Copyrights
+
 This is the vowpal wabbit fast online learning code.  It is Copyright
 (c) 2009 Yahoo! Inc, and released for use under the BSD (revised) open
 source license.
