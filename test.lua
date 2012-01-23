@@ -4,12 +4,22 @@ require 'allreduce'
 
 torch.setdefaulttensortype('torch.FloatTensor')
 
-if #arg == 0 then
-	error('please provide job number')
-end
+dname,fname = sys.fpath()
+cmd = torch.CmdLine()
+cmd:text()
+cmd:text('AllReduce test script')
+cmd:text()
+cmd:text('Options:')
+cmd:option('-id', 1, 'job\s unique ID')
+cmd:option('-total', 1, 'total number of jobs')
+cmd:option('-server', 'localhost', 'job server address')
+cmd:option('-type', 'average', 'reduce type: average | accumulate | best')
+cmd:text()
+opt = cmd:parse(arg)
 
-jobid = tonumber(arg[1])
-jobtotal = tonumber(arg[2] or 1)
+jobid = opt.id
+jobtotal = opt.total
+server = opt.server
 
 if jobid == 1 then
 	x = lab.zeros(10)
@@ -17,15 +27,19 @@ else
 	x = lab.ones(10)
 end
 
-allreduce.init('localhost', jobid, jobtotal)
+allreduce.init(server, jobid, jobtotal)
 
 print('job ' .. jobid .. ' - sending vector:')
 print(x)
 
--- 3 different reduce types:
-allreduce.average(x)
---red = allreduce.accumulate(x)
---red = allreduce.best(x, score)
+if opt.type == 'average' then
+	allreduce.average(x)
+elseif opt.type == 'accumulate' then
+	allreduce.accumulate(x)
+else
+	score = random.uniform(0,1)
+	allreduce.best(x, score)
+end
 
 print('job ' .. jobid .. ' - reduced vector is:')
 print(x)
