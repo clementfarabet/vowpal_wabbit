@@ -14,12 +14,15 @@ lua -lallreduce -e "allreduce.startserver()"
 Once this daemon is running, you can run as many jobs as you
 like, on any machine, provided that you point to 'mymachine'.
 
-From Lua:
+From machine 1:
+
 ``` lua
 -- script 1:
 allreduce.init('mymachine', 1, 2)  -- job 1/2
 allreduce.average(somevector)
 ```
+
+From machine 2:
 
 ``` lua
 -- script 2:
