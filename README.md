@@ -31,9 +31,7 @@ After these calls, both scripts will have the same 'somevector'.
 
 ## Install
 
-You will need a valid luarocks install of [Torch7](http://github.com/andresy/torch).
-
-Given a valid luarocks install:
+Given a valid lua+luarocks install:
 
 ``` sh
 luarocks --from=http://luarocks.neuflow.org/ install allreduce
