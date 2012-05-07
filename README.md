@@ -8,7 +8,7 @@ machine:
 
 ``` sh
 ssh mymachine
-lua -lallreduce -e "allreduce.startserver()"
+torch -lallreduce -e "allreduce.startserver()"
 ```
 
 Once this daemon is running, you can run as many jobs as you
@@ -32,12 +32,30 @@ allreduce.average(somevector)
 
 After these calls, both scripts will have the same 'somevector'.
 
+A test is provided in the source tree. After starting the server on 'localhost',
+you can run the test like this:
+
+``` lua
+# process 1:
+torch test.lua -id 1 -total 2
+
+# process 2:
+torch test.lua -id 2 -total 2
+```
+
 ## Install
 
-Given a valid lua+luarocks install:
+Given a valid Torch7 install:
 
 ``` sh
-luarocks --from=http://luarocks.neuflow.org/ install allreduce
+torch-pkg install allreduce
+```
+
+or, to retrieve the sources:
+
+``` sh
+torch-pkg download allreduce
+torch-pkg deploy allreduce
 ```
 
 ## Copyrights
