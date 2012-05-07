@@ -1,5 +1,5 @@
 
-require 'lab'
+import 'torch'
 require 'allreduce'
 
 torch.setdefaulttensortype('torch.FloatTensor')
@@ -22,9 +22,9 @@ jobtotal = opt.total
 server = opt.server
 
 if jobid == 1 then
-	x = lab.zeros(10)
+   x = zeros(10)
 else
-	x = lab.ones(10)
+   x = ones(10)
 end
 
 allreduce.init(server, jobid, jobtotal)
