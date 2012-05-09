@@ -1,5 +1,6 @@
 
 import 'torch'
+require 'sys'
 require 'allreduce'
 
 torch.setdefaulttensortype('torch.FloatTensor')
